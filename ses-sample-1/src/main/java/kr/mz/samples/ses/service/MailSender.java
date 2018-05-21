@@ -7,5 +7,5 @@ import kr.mz.samples.ses.model.Email;
  *
  */
 public interface MailSender {
-	void send(Email email);sss
+	void send(Email email);
 }

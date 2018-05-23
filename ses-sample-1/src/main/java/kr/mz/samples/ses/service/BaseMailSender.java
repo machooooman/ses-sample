@@ -73,7 +73,7 @@ public abstract class BaseMailSender implements MailSender{
 		props.put("mail.smtp.starttls.required", "true");
 		props.put("mail.smtp.EnableSSL.enable","true");
 		//2. 유형별 설정
-		setPropertiesBySender(props);;
+		setPropertiesBySender(props);
 		return props;
 	}
 	

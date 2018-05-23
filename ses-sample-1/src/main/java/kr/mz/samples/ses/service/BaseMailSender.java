@@ -43,18 +43,20 @@ public abstract class BaseMailSender implements MailSender{
 	 * 메일 전송
 	 */
 	@Override
-	public void send(Email email){
+	public void send(Email email) throws Exception{
 		Properties props = getProperties();
 		//Session session = Session.getDefaultInstance(props);
 		Session session = getSession(props);
+		SMTPTransport t = (SMTPTransport)session.getTransport("smtps");
 		try {
 			MimeMessage msg = getMessage(session, email);
-			SMTPTransport t = (SMTPTransport)session.getTransport("smtps");
 			send(msg, t);
 			//log.info("success");
 			//t.setReportSuccess(true);
 		} catch(Exception e) {
 			//log.error(e);
+		} finally {
+			t.close();
 		}
 	}
 	

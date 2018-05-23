@@ -19,20 +19,19 @@ import com.sun.mail.smtp.SMTPTransport;
 public class JavaMailSender extends BaseMailSender{
 	
 	@Value("${mail.smtp.host}")
-	String host;
+	private String host;
 	
 	@Value("${mail.smtp.port}")
-	String port;
+	private String port;
 	
 	@Value("${mail.smtp.username}")
-	String username;
+	private String username;
 	
 	@Value("${mail.smtp.password}")
-	String password;
+	private String password;
 	
 	@Override
 	protected void setPropertiesBySender(Properties props) {
-		props.put("mail.smtp.EnableSSL.enable","true");
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.port", port);
 	}

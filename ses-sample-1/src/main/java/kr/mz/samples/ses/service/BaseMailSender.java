@@ -65,8 +65,11 @@ public abstract class BaseMailSender implements MailSender{
 	public Properties getProperties() {
 		Properties props = new Properties();
 		//1. 공통 설정
+		props.put("mail.transport.protocol", "smtps");
 		props.put("mail.smtp.auth", "true"); 
 		props.put("mail.smtp.starttls.enable","true"); 
+		props.put("mail.smtp.starttls.required", "true");
+		props.put("mail.smtp.EnableSSL.enable","true");
 		//2. 유형별 설정
 		setPropertiesBySender(props);
 		return props;
@@ -87,5 +90,4 @@ public abstract class BaseMailSender implements MailSender{
 		msg.setContent(email.getBody(),"text/html; charset=UTF-8");
 		return msg;
 	}
-	
 }

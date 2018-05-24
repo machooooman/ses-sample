@@ -1,4 +1,6 @@
 package kr.mz.samples.ses.service;
+import com.sun.mail.smtp.SMTPTransport;
+
 import kr.mz.samples.ses.model.Email;
 
 /**
@@ -7,5 +9,5 @@ import kr.mz.samples.ses.model.Email;
  *
  */
 public interface MailSender {
-	void send(Email email) throws Exception;
+	SMTPTransport send(Email email) throws Exception;
 }

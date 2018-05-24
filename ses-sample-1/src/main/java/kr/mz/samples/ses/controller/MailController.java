@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sun.mail.smtp.SMTPTransport;
+
 import kr.mz.samples.ses.model.Email;
 import kr.mz.samples.ses.service.BaseMailSender;
 import kr.mz.samples.ses.service.JavaMailSender;
@@ -40,16 +42,16 @@ public class MailController {
 	}
 	
 	@PostMapping({"/java", "/ses"})
-	public @ResponseBody ResponseEntity<?> send(@RequestBody Email email, HttpServletRequest request) {
+	public @ResponseBody ResponseEntity<?> send(@RequestBody Email email, HttpServletRequest request) throws Exception{
 		ResponseEntity<?> response;
-		try {
-			String key = senderMap.keySet().stream()
-					.filter(k -> request.getRequestURI().replace("/mail", "").startsWith(k))
-					.collect(Collectors.joining());
-			BaseMailSender sender = senderMap.get(key);
-			sender.send(email);
+		String key = senderMap.keySet().stream()
+				.filter(k -> request.getRequestURI().replace("/mail", "").startsWith(k))
+				.collect(Collectors.joining());
+		BaseMailSender sender = senderMap.get(key);
+		SMTPTransport t = sender.send(email);
+		if(t.getReportSuccess()) {
 			response = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
-		} catch(Exception e) {
+		} else {
 			response = new ResponseEntity<>("FAIL", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return response;
